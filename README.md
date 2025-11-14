@@ -1,109 +1,57 @@
-# Portfolio Allocation and Investment Planning Tool
+# 📊 Financial Portfolio Planning Dashboard  
+A professional full-stack investment planning platform inspired by Fidelity / Vanguard dashboards.  
+Built with **React + Vite + TailwindCSS**, **Node.js + Express**, and **TypeScript** across the stack.
 
-A full-stack application for portfolio allocation and investment planning with React, Vite, TailwindCSS frontend and Node.js, Express backend.
+This tool helps users:
+- Allocate their investments based on risk level  
+- Visualize portfolio composition  
+- View projected future value over 1, 2, 5, and 10 years  
+- Access a clean Fidelity-style UI  
+- Analyze long-term financial growth  
 
-## Project Structure
+Future updates include monthly investment calculators, goal-based investing, comparison charts,
+market conditions, and user accounts.
 
-```
-.
-├── backend/          # Node.js + Express backend
-│   ├── src/
-│   │   ├── routes/   # API routes
-│   │   ├── services/ # Business logic
-│   │   └── server.ts # Express server
-│   └── package.json
-├── frontend/         # React + Vite + TailwindCSS frontend
-│   ├── src/
-│   │   ├── components/ # React components
-│   │   ├── App.tsx
-│   │   └── main.tsx
-│   └── package.json
-└── shared/           # Shared TypeScript types
-    └── types/
-        └── index.ts
-```
+---
 
-## Features
+## 🚀 Live Demo (Coming Soon)
+Once deployed:
 
-- **Portfolio Allocation Engine**: Automatically allocates investments based on risk level
-  - Low Risk: Bonds (60%) + Index Funds (40%)
-  - Moderate Risk: Index Funds (40%) + Tech Stocks (35%) + Value Stocks (25%)
-  - High Risk: Tech Stocks (45%) + Growth Stocks (35%) + Emerging Markets (20%)
+**🔗 Frontend:** https://YOUR-APP.vercel.app  
+**🔗 Backend API:** https://YOUR-BACKEND.onrender.com
 
-- **Expected Return Calculator**: Uses compound growth formulas to project future values
+---
 
-- **Interactive Dashboard**: 
-  - Form for investment inputs
-  - Allocation table
-  - Pie charts for initial and projected allocations (Years 1, 2, 5, 10)
+## 🧠 Features
 
-## Getting Started
+### ✅ **1. Portfolio Allocation Engine**
+Automatically builds optimized portfolios based on user risk score.
 
-### Prerequisites
+- **Low Risk:** Bonds + Index Funds  
+- **Moderate Risk:** Index Funds + Tech + Value  
+- **High Risk:** Tech + Growth + Emerging Markets  
 
-- Node.js (v18 or higher)
-- npm or yarn
+### ✅ **2. Future Value Projection Calculator**
+Uses compound growth formulas to estimate portfolio values for:
 
-### Backend Setup
+- 1 year  
+- 2 years  
+- 5 years  
+- 10 years  
 
-```bash
-cd backend
-npm install
-npm run dev
-```
+### ✅ **3. Interactive Dashboard**
+- Clean Fidelity-inspired UI  
+- Pie charts for allocations  
+- Summary cards for projections  
+- Multi-page sidebar navigation  
 
-The backend server will run on `http://localhost:3001`
+### 🔜 Coming Soon (In Development)
+- Monthly investment calculator  
+- Goal-based investing (retirement / home / emergency fund)  
+- Portfolio comparison vs. S&P 500, QQQ, and 60/40  
+- Market conditions page (CPI, VIX, rates, S&P500)  
+- User authentication (Firebase)  
+- Saving portfolios to database  
+- Complete analytics dashboard  
 
-### Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The frontend will run on `http://localhost:3000`
-
-## API Endpoints
-
-### POST `/api/portfolio/calculate`
-
-Calculate portfolio allocation and projections.
-
-**Request Body:**
-```json
-{
-  "investmentAmount": 10000,
-  "riskLevel": "Moderate",
-  "expectedReturn": 7,
-  "timeline": 5,
-  "preferredSectors": []
-}
-```
-
-**Response:**
-```json
-{
-  "initialAllocations": [
-    {
-      "category": "Index Funds",
-      "percentage": 0.4,
-      "dollarAmount": 4000
-    }
-  ],
-  "yearlyProjections": [
-    {
-      "year": 1,
-      "totalValue": 10700,
-      "allocations": [...]
-    }
-  ]
-}
-```
-
-## Technologies
-
-- **Frontend**: React 18, Vite, TailwindCSS, Recharts
-- **Backend**: Node.js, Express, TypeScript
-- **Shared**: TypeScript interfaces
 
