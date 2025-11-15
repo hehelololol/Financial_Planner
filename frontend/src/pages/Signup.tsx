@@ -2,6 +2,10 @@ import { useState, FormEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
+import { InputField } from '../components/ui/InputField';
+import { GlowButton } from '../components/ui/GlowButton';
+import { GlassPanel } from '../components/ui/GlassPanel';
+import { AnimatedBackground } from '../components/AnimatedBackground';
 
 export function Signup() {
   const [email, setEmail] = useState('');
@@ -77,86 +81,71 @@ export function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-fidelity-gray-light flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full">
-        <div className="bg-white border border-fidelity shadow-fidelity p-8">
+    <div className="min-h-screen bg-dark-bg relative overflow-hidden flex items-center justify-center px-4 py-12">
+      <AnimatedBackground />
+      
+      <div className="relative z-10 max-w-md w-full">
+        <GlassPanel glow className="p-8 md:p-10 animate-fade-in">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-fidelity-gray-dark mb-2">
+            <div className="inline-block mb-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-500/50">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                </svg>
+              </div>
+            </div>
+            <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
               Create Account
             </h1>
-            <p className="text-fidelity-gray-medium">
+            <p className="text-gray-400">
               Sign up to start managing your portfolios
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-fidelity-gray-medium mb-2"
-              >
-                Email Address
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-fidelity-input focus:ring-2 focus:ring-fidelity-green focus:border-fidelity-green outline-none text-fidelity-gray-dark"
-                placeholder="you@example.com"
-                required
-                disabled={loading}
-              />
-            </div>
+            <InputField
+              id="email"
+              type="email"
+              label="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              required
+              disabled={loading}
+            />
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-fidelity-gray-medium mb-2"
-              >
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-fidelity-input focus:ring-2 focus:ring-fidelity-green focus:border-fidelity-green outline-none text-fidelity-gray-dark"
-                placeholder="At least 6 characters"
-                required
-                disabled={loading}
-                minLength={6}
-              />
-            </div>
+            <InputField
+              id="password"
+              type="password"
+              label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="At least 6 characters"
+              required
+              disabled={loading}
+              minLength={6}
+            />
 
-            <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-fidelity-gray-medium mb-2"
-              >
-                Confirm Password
-              </label>
-              <input
-                id="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-fidelity-input focus:ring-2 focus:ring-fidelity-green focus:border-fidelity-green outline-none text-fidelity-gray-dark"
-                placeholder="Confirm your password"
-                required
-                disabled={loading}
-                minLength={6}
-              />
-            </div>
+            <InputField
+              id="confirmPassword"
+              type="password"
+              label="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm your password"
+              required
+              disabled={loading}
+              minLength={6}
+            />
 
-            <button
+            <GlowButton
               type="submit"
               disabled={loading}
-              className="w-full bg-fidelity-green text-white py-3.5 px-8 font-semibold hover:bg-fidelity-green-dark focus:outline-none focus:ring-2 focus:ring-fidelity-green focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full"
             >
               {loading ? (
-                <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
@@ -165,23 +154,22 @@ export function Signup() {
               ) : (
                 'Create Account'
               )}
-            </button>
+            </GlowButton>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-fidelity-gray-medium">
+          <div className="mt-8 text-center">
+            <p className="text-gray-400">
               Already have an account?{' '}
               <Link
                 to="/login"
-                className="text-fidelity-green hover:text-fidelity-green-dark font-medium"
+                className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
               >
                 Sign in
               </Link>
             </p>
           </div>
-        </div>
+        </GlassPanel>
       </div>
     </div>
   );
 }
-

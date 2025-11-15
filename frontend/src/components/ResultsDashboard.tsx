@@ -1,4 +1,6 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
+import { Card } from './ui/Card';
+import { SectionHeader } from './ui/SectionHeader';
 
 interface TickerAllocation {
   ticker: string;
@@ -31,14 +33,14 @@ interface ResultsDashboardProps {
   monthlyContribution?: MonthlyContribution;
 }
 
-// Fidelity-inspired muted professional color palette for charts
+// Modern fintech color palette for charts
 const CHART_COLORS = [
-  '#007A33', // Fidelity Green
-  '#26A65B', // Soft Green
-  '#2E2E2E', // Dark Gray
-  '#757575', // Medium Gray
-  '#5A8FA8', // Muted Blue
-  '#8B7A6B', // Muted Brown
+  '#3B82F6', // Neon Blue
+  '#06b6d4', // Cyan
+  '#8b5cf6', // Purple
+  '#10b981', // Green
+  '#f59e0b', // Amber
+  '#ef4444', // Red
 ];
 
 export function ResultsDashboard({ allocations, expectedReturns, monthlyContribution }: ResultsDashboardProps) {
@@ -61,9 +63,9 @@ export function ResultsDashboard({ allocations, expectedReturns, monthlyContribu
     if (active && payload && payload.length) {
       const data = payload[0];
       return (
-        <div className="bg-white p-3 border border-fidelity shadow-fidelity">
-          <p className="font-semibold text-fidelity-gray-dark text-sm">{data.name}</p>
-          <p className="text-fidelity-green text-sm mt-1">
+        <div className="bg-gray-800 p-3 border border-gray-700 rounded-lg shadow-2xl backdrop-blur-xl">
+          <p className="font-semibold text-white text-sm">{data.name}</p>
+          <p className="text-blue-400 text-sm mt-1">
             {formatCurrency(data.value)} ({(data.payload.percentage * 100).toFixed(1)}%)
           </p>
         </div>
@@ -84,81 +86,80 @@ export function ResultsDashboard({ allocations, expectedReturns, monthlyContribu
 
   return (
     <div className="space-y-8">
-      {/* Summary Card */}
-      <div className="bg-fidelity-green p-8 text-white">
-        <h2 className="text-2xl font-bold mb-6">Portfolio Summary</h2>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-          <div>
-            <p className="text-sm mb-2 opacity-90">Initial Investment</p>
-            <p className="text-3xl font-bold">{formatCurrency(initialAmount)}</p>
-          </div>
-          <div>
-            <p className="text-sm mb-2 opacity-90">1 Year Projection</p>
-            <p className="text-3xl font-bold">{formatCurrency(expectedReturns[1])}</p>
-          </div>
-          <div>
-            <p className="text-sm mb-2 opacity-90">2 Year Projection</p>
-            <p className="text-3xl font-bold">{formatCurrency(expectedReturns[2])}</p>
-          </div>
-          <div>
-            <p className="text-sm mb-2 opacity-90">5 Year Projection</p>
-            <p className="text-3xl font-bold">{formatCurrency(expectedReturns[5])}</p>
-          </div>
-          <div>
-            <p className="text-sm mb-2 opacity-90">10 Year Projection</p>
-            <p className="text-3xl font-bold">{formatCurrency(expectedReturns[10])}</p>
-          </div>
+      {/* Summary Card with Gradient Glow */}
+      <Card glow className="bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-blue-600/20 border-blue-500/30 p-8 animate-fade-in">
+        <h2 className="text-2xl font-bold mb-6 text-white">Portfolio Summary</h2>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+          {[
+            { label: 'Initial Investment', value: initialAmount, color: 'text-blue-400' },
+            { label: '1 Year Projection', value: expectedReturns[1], color: 'text-green-400' },
+            { label: '2 Year Projection', value: expectedReturns[2], color: 'text-green-400' },
+            { label: '5 Year Projection', value: expectedReturns[5], color: 'text-yellow-400' },
+            { label: '10 Year Projection', value: expectedReturns[10], color: 'text-purple-400' },
+          ].map((item, index) => (
+            <div key={index} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
+              <p className="text-sm mb-2 text-gray-400">{item.label}</p>
+              <p className={`text-3xl font-bold ${item.color}`}>{formatCurrency(item.value)}</p>
+            </div>
+          ))}
         </div>
-      </div>
+      </Card>
 
       {/* 2-Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left Column: Allocations */}
         <div className="space-y-8">
           {/* Allocations Table */}
-          <div className="bg-white border border-fidelity shadow-fidelity p-8">
-            <h2 className="text-2xl font-bold text-fidelity-gray-dark mb-6">
-              Portfolio Allocations
-            </h2>
+          <Card glow className="hover:scale-[1.01] transition-transform duration-300 animate-fade-in">
+            <SectionHeader
+              title="Portfolio Allocations"
+              icon={
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              }
+              className="mb-6"
+            />
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-fidelity">
-                    <th className="text-left py-4 px-4 text-sm font-semibold text-fidelity-gray-medium">Ticker</th>
-                    <th className="text-right py-4 px-4 text-sm font-semibold text-fidelity-gray-medium">Percentage</th>
-                    <th className="text-right py-4 px-4 text-sm font-semibold text-fidelity-gray-medium">Amount</th>
+                  <tr className="border-b border-gray-700">
+                    <th className="text-left py-4 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Ticker</th>
+                    <th className="text-right py-4 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Percentage</th>
+                    <th className="text-right py-4 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Amount</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {allocations.map((allocation) => (
+                <tbody className="divide-y divide-gray-700">
+                  {allocations.map((allocation, index) => (
                     <tr
                       key={allocation.ticker}
-                      className="border-b border-fidelity hover:bg-fidelity-gray-light"
+                      className="hover:bg-gray-800/50 transition-colors duration-200 animate-fade-in"
+                      style={{ animationDelay: `${index * 0.05}s` }}
                     >
-                      <td className="py-4 px-4 text-fidelity-gray-dark font-medium">{allocation.ticker}</td>
-                      <td className="py-4 px-4 text-right text-fidelity-gray-medium">
+                      <td className="py-4 px-4 text-white font-medium">{allocation.ticker}</td>
+                      <td className="py-4 px-4 text-right text-gray-300">
                         {(allocation.percentage * 100).toFixed(1)}%
                       </td>
-                      <td className="py-4 px-4 text-right text-fidelity-gray-dark font-semibold">
+                      <td className="py-4 px-4 text-right text-blue-400 font-semibold">
                         {formatCurrency(allocation.dollarAmount)}
                       </td>
                     </tr>
                   ))}
-                  <tr className="bg-fidelity-gray-light font-semibold">
-                    <td className="py-4 px-4 text-fidelity-gray-dark">Total</td>
-                    <td className="py-4 px-4 text-right text-fidelity-gray-dark">100.0%</td>
-                    <td className="py-4 px-4 text-right text-fidelity-green">
+                  <tr className="bg-blue-500/10 border-t-2 border-blue-500/30 font-semibold">
+                    <td className="py-4 px-4 text-white">Total</td>
+                    <td className="py-4 px-4 text-right text-white">100.0%</td>
+                    <td className="py-4 px-4 text-right text-blue-400">
                       {formatCurrency(initialAmount)}
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </div>
+          </Card>
 
           {/* Year 0 Pie Chart */}
-          <div className="bg-white border border-fidelity shadow-fidelity p-8">
-            <h2 className="text-2xl font-bold text-fidelity-gray-dark mb-6">
+          <Card glow className="hover:scale-[1.01] transition-transform duration-300 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <h2 className="text-2xl font-bold text-white mb-6">
               Initial Allocation (Year 0)
             </h2>
             <ResponsiveContainer width="100%" height={350}>
@@ -176,6 +177,7 @@ export function ResultsDashboard({ allocations, expectedReturns, monthlyContribu
                   outerRadius={120}
                   fill="#8884d8"
                   dataKey="value"
+                  animationDuration={800}
                 >
                   {allocations.map((entry, index) => (
                     <Cell
@@ -187,29 +189,39 @@ export function ResultsDashboard({ allocations, expectedReturns, monthlyContribu
                 <Tooltip content={<CustomTooltip />} />
               </PieChart>
             </ResponsiveContainer>
-          </div>
+          </Card>
         </div>
 
         {/* Right Column: Projections */}
         <div>
-          <div className="bg-white border border-fidelity shadow-fidelity p-8">
-            <h2 className="text-2xl font-bold text-fidelity-gray-dark mb-6">
-              Projected Growth
-            </h2>
-            <div className="space-y-8">
-              {([1, 2, 5, 10] as const).map((year) => {
+          <Card glow className="hover:scale-[1.01] transition-transform duration-300 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <SectionHeader
+              title="Projected Growth"
+              icon={
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              }
+              className="mb-6"
+            />
+            <div className="space-y-6">
+              {([1, 2, 5, 10] as const).map((year, idx) => {
                 const projectedAllocations = getProjectedAllocations(year);
                 return (
-                  <div
+                  <Card
                     key={year}
-                    className="bg-fidelity-gray-light p-6 border border-fidelity"
+                    glow
+                    className="bg-gray-800/50 border-gray-700/50 hover:scale-[1.02] transition-transform duration-300"
+                    style={{ animationDelay: `${(idx + 1) * 0.1}s` }}
                   >
-                    <h3 className="text-lg font-semibold text-fidelity-gray-dark mb-2">
-                      {year} Year{year > 1 ? 's' : ''} Projection
-                    </h3>
-                    <p className="text-sm text-fidelity-gray-medium mb-4">
-                      Total Value: {formatCurrency(expectedReturns[year])}
-                    </p>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-semibold text-white">
+                        {year} Year{year > 1 ? 's' : ''} Projection
+                      </h3>
+                      <p className="text-sm text-blue-400 font-semibold">
+                        {formatCurrency(expectedReturns[year])}
+                      </p>
+                    </div>
                     <ResponsiveContainer width="100%" height={250}>
                       <PieChart>
                         <Pie
@@ -225,6 +237,7 @@ export function ResultsDashboard({ allocations, expectedReturns, monthlyContribu
                           outerRadius={90}
                           fill="#8884d8"
                           dataKey="value"
+                          animationDuration={800}
                         >
                           {projectedAllocations.map((entry, index) => (
                             <Cell
@@ -236,102 +249,113 @@ export function ResultsDashboard({ allocations, expectedReturns, monthlyContribu
                         <Tooltip content={<CustomTooltip />} />
                       </PieChart>
                     </ResponsiveContainer>
-                  </div>
+                  </Card>
                 );
               })}
             </div>
-          </div>
+          </Card>
         </div>
       </div>
 
       {/* Monthly Contribution Results */}
       {monthlyContribution && (
-        <div className="bg-white border border-fidelity shadow-fidelity p-8">
-          <h2 className="text-2xl font-bold text-fidelity-gray-dark mb-6">
-            Monthly Contribution Projection
-          </h2>
+        <Card glow className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <SectionHeader
+            title="Monthly Contribution Projection"
+            icon={
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            }
+            className="mb-8"
+          />
           
           {/* Summary Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-fidelity-gray-light p-6 border border-fidelity">
-              <p className="text-sm text-fidelity-gray-medium mb-2">Final Projected Value</p>
-              <p className="text-3xl font-bold text-fidelity-green">
-                {formatCurrency(monthlyContribution.finalValue)}
-              </p>
-            </div>
-            <div className="bg-fidelity-gray-light p-6 border border-fidelity">
-              <p className="text-sm text-fidelity-gray-medium mb-2">Total Contributions</p>
-              <p className="text-3xl font-bold text-fidelity-gray-dark">
-                {formatCurrency(monthlyContribution.totalContributions)}
-              </p>
-            </div>
-            <div className="bg-fidelity-gray-light p-6 border border-fidelity">
-              <p className="text-sm text-fidelity-gray-medium mb-2">Total Growth</p>
-              <p className="text-3xl font-bold text-fidelity-green">
-                {formatCurrency(monthlyContribution.totalGrowth)}
-              </p>
-            </div>
+            {[
+              { label: 'Final Projected Value', value: monthlyContribution.finalValue, color: 'from-blue-500 to-blue-600', borderColor: 'blue' },
+              { label: 'Total Contributions', value: monthlyContribution.totalContributions, color: 'from-gray-500 to-gray-600', borderColor: 'gray' },
+              { label: 'Total Growth', value: monthlyContribution.totalGrowth, color: 'from-green-500 to-green-600', borderColor: 'green' },
+            ].map((stat, index) => (
+              <Card
+                key={index}
+                glow
+                className={`bg-gradient-to-br ${stat.color}/20 border-${stat.borderColor}-500/30 hover:scale-105 transition-transform duration-300 animate-slide-up`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <p className="text-sm text-gray-400 mb-2">{stat.label}</p>
+                <p className={`text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+                  {formatCurrency(stat.value)}
+                </p>
+              </Card>
+            ))}
           </div>
 
           {/* Growth Chart */}
           <div>
-            <h3 className="text-xl font-semibold text-fidelity-gray-dark mb-4">
+            <h3 className="text-xl font-semibold text-white mb-6">
               Projected Growth Over Time
             </h3>
-            <ResponsiveContainer width="100%" height={400}>
-              <LineChart data={monthlyContribution.yearlyProjections}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E0E0E0" />
-                <XAxis 
-                  dataKey="year" 
-                  stroke="#757575"
-                  style={{ fontSize: '12px' }}
-                  label={{ value: 'Year', position: 'insideBottom', offset: -5, style: { fill: '#757575' } }}
-                />
-                <YAxis 
-                  stroke="#757575"
-                  style={{ fontSize: '12px' }}
-                  tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
-                  label={{ value: 'Value ($)', angle: -90, position: 'insideLeft', style: { fill: '#757575' } }}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'white', 
-                    border: '1px solid #E0E0E0',
-                    borderRadius: '0',
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
-                  }}
-                  formatter={(value: number) => formatCurrency(value)}
-                />
-                <Legend />
-                <Line 
-                  type="monotone" 
-                  dataKey="value" 
-                  stroke="#007A33" 
-                  strokeWidth={3}
-                  name="Projected Value"
-                  dot={{ fill: '#007A33', r: 4 }}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="contributions" 
-                  stroke="#757575" 
-                  strokeWidth={2}
-                  strokeDasharray="5 5"
-                  name="Total Contributions"
-                  dot={{ fill: '#757575', r: 3 }}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="growth" 
-                  stroke="#26A65B" 
-                  strokeWidth={2}
-                  name="Growth"
-                  dot={{ fill: '#26A65B', r: 3 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <Card glow className="bg-gray-800/50 border-gray-700/50 p-6">
+              <ResponsiveContainer width="100%" height={400}>
+                <LineChart data={monthlyContribution.yearlyProjections}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} />
+                  <XAxis 
+                    dataKey="year" 
+                    stroke="#9ca3af"
+                    style={{ fontSize: '12px' }}
+                    label={{ value: 'Year', position: 'insideBottom', offset: -5, style: { fill: '#9ca3af' } }}
+                  />
+                  <YAxis 
+                    stroke="#9ca3af"
+                    style={{ fontSize: '12px' }}
+                    tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                    label={{ value: 'Value ($)', angle: -90, position: 'insideLeft', style: { fill: '#9ca3af' } }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1f2937', 
+                      border: '1px solid #374151',
+                      borderRadius: '8px',
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
+                      color: '#fff'
+                    }}
+                    formatter={(value: number) => formatCurrency(value)}
+                  />
+                  <Legend wrapperStyle={{ color: '#9ca3af' }} />
+                  <Line 
+                    type="monotone" 
+                    dataKey="value" 
+                    stroke="#3B82F6" 
+                    strokeWidth={3}
+                    name="Projected Value"
+                    dot={{ fill: '#3B82F6', r: 4 }}
+                    animationDuration={1000}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="contributions" 
+                    stroke="#9ca3af" 
+                    strokeWidth={2}
+                    strokeDasharray="5 5"
+                    name="Total Contributions"
+                    dot={{ fill: '#9ca3af', r: 3 }}
+                    animationDuration={1000}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="growth" 
+                    stroke="#10b981" 
+                    strokeWidth={2}
+                    name="Growth"
+                    dot={{ fill: '#10b981', r: 3 }}
+                    animationDuration={1000}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </Card>
           </div>
-        </div>
+        </Card>
       )}
     </div>
   );

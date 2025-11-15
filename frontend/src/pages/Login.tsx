@@ -2,6 +2,10 @@ import { useState, FormEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
+import { InputField } from '../components/ui/InputField';
+import { GlowButton } from '../components/ui/GlowButton';
+import { GlassPanel } from '../components/ui/GlassPanel';
+import { AnimatedBackground } from '../components/AnimatedBackground';
 
 export function Login() {
   const [email, setEmail] = useState('');
@@ -69,65 +73,58 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-fidelity-gray-light flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full">
-        <div className="bg-white border border-fidelity shadow-fidelity p-8">
+    <div className="min-h-screen bg-dark-bg relative overflow-hidden flex items-center justify-center px-4 py-12">
+      <AnimatedBackground />
+      
+      <div className="relative z-10 max-w-md w-full">
+        <GlassPanel glow className="p-8 md:p-10 animate-fade-in">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-fidelity-gray-dark mb-2">
+            <div className="inline-block mb-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/50">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+            </div>
+            <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
               Welcome Back
             </h1>
-            <p className="text-fidelity-gray-medium">
+            <p className="text-gray-400">
               Sign in to your account to continue
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-fidelity-gray-medium mb-2"
-              >
-                Email Address
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-fidelity-input focus:ring-2 focus:ring-fidelity-green focus:border-fidelity-green outline-none text-fidelity-gray-dark"
-                placeholder="you@example.com"
-                required
-                disabled={loading}
-              />
-            </div>
+            <InputField
+              id="email"
+              type="email"
+              label="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              required
+              disabled={loading}
+            />
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-fidelity-gray-medium mb-2"
-              >
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-fidelity-input focus:ring-2 focus:ring-fidelity-green focus:border-fidelity-green outline-none text-fidelity-gray-dark"
-                placeholder="Enter your password"
-                required
-                disabled={loading}
-              />
-            </div>
+            <InputField
+              id="password"
+              type="password"
+              label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              required
+              disabled={loading}
+            />
 
-            <button
+            <GlowButton
               type="submit"
               disabled={loading}
-              className="w-full bg-fidelity-green text-white py-3.5 px-8 font-semibold hover:bg-fidelity-green-dark focus:outline-none focus:ring-2 focus:ring-fidelity-green focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full"
             >
               {loading ? (
-                <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
@@ -136,23 +133,22 @@ export function Login() {
               ) : (
                 'Sign In'
               )}
-            </button>
+            </GlowButton>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-fidelity-gray-medium">
+          <div className="mt-8 text-center">
+            <p className="text-gray-400">
               Don't have an account?{' '}
               <Link
                 to="/signup"
-                className="text-fidelity-green hover:text-fidelity-green-dark font-medium"
+                className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
               >
                 Sign up
               </Link>
             </p>
           </div>
-        </div>
+        </GlassPanel>
       </div>
     </div>
   );
 }
-

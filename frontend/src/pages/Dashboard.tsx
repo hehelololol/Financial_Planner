@@ -136,33 +136,33 @@ export function Dashboard() {
   };
 
   return (
-    <main className="flex-1 px-8 py-10">
+    <main className="flex-1 px-6 lg:px-8 py-8 animate-fade-in">
       {!result ? (
-        <div className="max-w-3xl">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold text-fidelity-gray-dark mb-3">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-8 animate-slide-up">
+            <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
               Investment Portfolio Planner
             </h1>
-            <p className="text-lg text-fidelity-gray-medium">
+            <p className="text-xl text-gray-400 leading-relaxed">
               Create a personalized investment plan based on your risk tolerance and investment amount.
             </p>
           </div>
           <InvestmentForm onSubmit={handleFormSubmit} loading={loading} />
           {error && (
-            <div className="mt-6 p-4 bg-red-50 border border-red-200 text-red-700">
+            <div className="mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 backdrop-blur-sm animate-fade-in">
               {error}
             </div>
           )}
         </div>
       ) : (
         <div>
-          <div className="mb-8">
+          <div className="mb-8 animate-slide-up">
             <div className="flex items-center justify-between mb-6">
               <button
                 onClick={() => setResult(null)}
-                className="text-fidelity-green hover:text-fidelity-green-dark font-medium flex items-center gap-2"
+                className="text-gray-400 hover:text-white font-medium flex items-center gap-2 transition-colors group"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
                 Back to Planning
@@ -170,7 +170,7 @@ export function Dashboard() {
               {formData && (
                 <button
                   onClick={handleSavePortfolio}
-                  className="bg-fidelity-green text-white py-2.5 px-6 font-semibold hover:bg-fidelity-green-dark focus:outline-none focus:ring-2 focus:ring-fidelity-green focus:ring-offset-2 transition-colors flex items-center gap-2"
+                  className="bg-gradient-to-r from-blue-600 to-blue-500 text-white py-2.5 px-6 font-semibold hover:from-blue-500 hover:to-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/60 hover:scale-105 active:scale-95 rounded-lg"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
@@ -179,10 +179,10 @@ export function Dashboard() {
                 </button>
               )}
             </div>
-            <h1 className="text-4xl font-bold text-fidelity-gray-dark mb-3">
+            <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
               Portfolio Analysis
             </h1>
-            <p className="text-lg text-fidelity-gray-medium">
+            <p className="text-xl text-gray-400 leading-relaxed">
               Review your portfolio allocations and projected returns.
             </p>
           </div>

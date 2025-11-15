@@ -8,18 +8,20 @@ import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { Dashboard } from './pages/Dashboard';
 import { SavedPortfolios } from './pages/SavedPortfolios';
+import { About } from './pages/About';
 import { FirebaseConfigErrorDisplay } from './components/FirebaseConfigError';
 import { EnvDebug } from './components/EnvDebug';
 
 function AppLayout() {
   return (
-    <div className="min-h-screen bg-fidelity-gray-light">
+    <div className="min-h-screen bg-dark-bg relative">
       <NavBar />
-      <div className="flex">
-        <SideNav />
+      <SideNav />
+      <div className="ml-64 min-h-[calc(100vh-4rem)] pt-16">
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/saved-portfolios" element={<SavedPortfolios />} />
+          <Route path="/about" element={<About />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </div>
