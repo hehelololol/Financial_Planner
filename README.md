@@ -18,7 +18,7 @@ It’s basically a simple investment calculator that lets you:
 
 - Save portfolios to your own account
 
-Nothing crazy — just something I’m using to learn how real full-stack apps work.
+
 
 🛠️ Tech I Used
 
@@ -72,7 +72,7 @@ VITE_FIREBASE_AUTH_DOMAIN=...
 # run
 npm run dev
 
-📌 Future Things I Might Add (if I feel like it)
+📌 Future Things I Might Add 
 
 - Dark mode
 
